@@ -5,21 +5,22 @@
   
 
   
-  <title>MSW&#39;s Studio.</title>
+  <title>MySQL基础小记(一) | MSW&#39;s Studio.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#MySQL基础小记（一）# ##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；">
+  <meta name="description" content="##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；   SQL:2003：2003">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MSW&#39;s Studio.">
+<meta property="og:title" content="MySQL基础小记(一)">
 <meta property="og:url" content="http://yoursite.com/2018/06/26/MySQL基础/index.html">
 <meta property="og:site_name" content="MSW&#39;s Studio.">
-<meta property="og:description" content="#MySQL基础小记（一）# ##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；">
+<meta property="og:description" content="##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；   SQL:2003：2003">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/ddl.png">
-<meta property="og:updated_time" content="2018-06-26T12:07:15.657Z">
+<meta property="og:image" content="http://yoursite.com/2018/06/26/ddl.png">
+<meta property="og:updated_time" content="2018-06-26T12:14:37.479Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MSW&#39;s Studio.">
-<meta name="twitter:description" content="#MySQL基础小记（一）# ##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；">
-<meta name="twitter:image" content="http://yoursite.com/ddl.png">
+<meta name="twitter:title" content="MySQL基础小记(一)">
+<meta name="twitter:description" content="##SQL语句 ###1 概述SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：  SQL-92：1992年发布的SQL语言标准；   SQL:1999：1999年发布的SQL语言标签；   SQL:2003：2003">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/26/ddl.png">
   
     <link rel="alternate" href="/atom.xml" title="MSW&#39;s Studio." type="application/atom+xml">
   
@@ -73,17 +74,26 @@
         <section id="main"><article id="post-MySQL基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/26/MySQL基础/" class="article-date">
-  <time datetime="2018-06-26T10:07:49.205Z" itemprop="datePublished">2018-06-26</time>
+  <time datetime="2018-06-25T16:00:00.000Z" itemprop="datePublished">2018-06-26</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL基础小记(一)
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#MySQL基础小记（一）#</p>
-<p>##SQL语句</p>
+        <p>##SQL语句</p>
 <p>###1 概述<br>SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：</p>
 <ul>
 <li>SQL-92：1992年发布的SQL语言标准；</li>
@@ -96,9 +106,8 @@
 </ul>
 <p>这些标准就与JDK的版本一样，在新的版本中总要有一些语法的变化。不同时期的数据库对不同标准做了实现。</p>
 <p>虽然SQL可以用在所有关系型数据库中，但很多数据库还都有标准之后的一些语法，我们可以称之为“方言”。例如MySQL中的LIMIT语句就是MySQL独有的方言，其它数据库都不支持！当然，Oracle或SQL Server都有自己的方言。</p>
-<p>###2 语句的分类</p>
-<ol>
-<li><p>DDLL（Data Definition Language）：数据定义语言。<br><img src="/ddl.png" alt="avatar"></p>
+<h2 id="2-语句的分类"><a href="#2-语句的分类" class="headerlink" title="2 语句的分类"></a>2 语句的分类</h2><ol>
+<li><p>DDLL（Data Definition Language）：数据定义语言。<br><img src="../ddl.png" alt="avatar"></p>
 </li>
 <li></li>
 </ol>
@@ -109,6 +118,8 @@
       <a data-url="http://yoursite.com/2018/06/26/MySQL基础/" data-id="cjivn58rq00017s50680f6q41" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+
     </footer>
   </div>
   
@@ -137,7 +148,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/你好/">你好</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/你好/">你好</a></li></ul>
     </div>
   </div>
 
@@ -147,7 +158,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/你好/" style="font-size: 10px;">你好</a>
+      <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/你好/" style="font-size: 10px;">你好</a>
     </div>
   </div>
 
@@ -169,7 +180,7 @@
       <ul>
         
           <li>
-            <a href="/2018/06/26/MySQL基础/">(no title)</a>
+            <a href="/2018/06/26/MySQL基础/">MySQL基础小记(一)</a>
           </li>
         
           <li>

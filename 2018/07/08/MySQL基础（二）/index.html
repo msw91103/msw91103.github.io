@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.imgur.com/54eBnky.png">
 <meta property="og:image" content="https://i.imgur.com/ydlzH5R.png">
-<meta property="og:updated_time" content="2018-07-09T11:52:31.203Z">
+<meta property="og:updated_time" content="2018-07-09T11:56:53.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL-事务">
 <meta name="twitter:description" content="MySQL-事务 一、什么是事务　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。　　举一个简单的例子：银行转账事务。A要给B转账10000元人民币，要实现的操作包括：　　- 操作１：A账户中减去10000元；　　- 操作２：B账户">
@@ -189,11 +189,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>　　　<center><font size="10"><strong>MySQL-事务</strong><br></font></center></p>
-<font size="5"><strong>一、什么是事务</strong></font><br><br><font face="微软雅黑">　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。<br><br>　　举一个简单的例子：银行转账事务。A要给B转账10000元人民币，要实现的操作包括：<br><br>　　- <strong>操作１：A账户中减去10000元；</strong><br><br>　　- <strong>操作２：B账户中增加10000元。</strong><br><br>　　如果银行系统Ａ完成了减去1000元的操作，这时系统出现问题，没有给Ｂ账户进行增加1000元的操作。很明显，这种操作是存在极大的风险的。在这个事务中，要么事务中的多个操作都成功，要么都失败，不能出现某些操作成功，而某些操作失败的情况。即：操作１和操作２都成功，完成转账；或者操作１和操作２都失败，转账失败。<br></font>
-
-<font size="5"><strong>二、事务的四大特性（ACID）</strong></font><br><font face="微软雅黑">　　由上面的例子，我们很容易就可以总结出事务的四大特性。<br>　　1. 原子性（Atomicity）：事务中所有操作是不可再分割的原子单位。事务中所有操作要么全部执行成功，要么全部执行失败。<br>　　2. 一致性 （Consistency）：事务执行后，数据库状态与其它业务规则保持一致。如转账业务，无论事务执行成功与否，参与转账的两个账号余额之和应该是不变的。其他特性都是服务于一致性。<br>　　3. 隔离性（Isolation）：隔离性是指在并发操作中，不同事务之间应该隔离开来，使每个并发中的事务不会相互干扰。<br>　　4. 持久性（Durability）：一旦事务提交成功，事务中所有的数据操作都必须被持久化到数据库中，即使提交事务后，数据库马上崩溃，在数据库重启时，也必须能保证通过某种机制恢复数据。<br></font>
-
-<font size="5"><strong>三、事务隔离级别</strong></font><br>１.　SQL中定义了４中隔离级别。<br>　<br>- <strong>SERIALIZABLE（串行化）</strong><br>　　不会出现任何并发问题，因为它是对同一数据的访问是串行的，非并发访问的，性能最差；<br>- <strong>REPEATABLE READ （可重复读）（MySQL）</strong><br>　　防止脏读和不可重复读，不能处理幻读问题；<br>　　性能比SERIALIZABLE好。<br>- <strong>READ COMMITTED （读已提交数据）（Oracle）</strong><br>　　防止脏读，没有处理不可重复读，也没有处理幻读；<br>　　性能比REPEATABLE READ好。<br>- <strong>READ UNCOMMITTED （读未提交数据）：脏读</strong><br>　　即使没有提交，对其他事务也都是可见的。<br>　　可能出现任何事务并发问题；<br>　　性能最好。<br><br>２.　<strong>MySQL中默认的隔离级别为Repeatable read</strong><br><br>    select @@tx_isolation　／／可以通过这个语句进行查看<br>    set transaction isolationlevel 　／／可以通过这个语句进行设置隔离级别<br><br>３.　<strong>JDBC设置隔离级别</strong><br><br>    con. setTransactionIsolation(int level)<br><br>参数可选值如下：<br><br>    Connection.TRANSACTION_READ_UNCOMMITTED；<br>    Connection.TRANSACTION_READ_COMMITTED；<br>    Connection.TRANSACTION_REPEATABLE_READ；<br>    Connection.TRANSACTION_SERIALIZABLE。<br><br><font size="5"><strong>四、 MySQL中的事务</strong></font><br><font face="微软雅黑">　　MySQL中默认每一条SQL语句代表一个事务。但是如果一个事务中包含多个语句，那么需要进行开始事务和结束事务的操作。<br>　　我们以银行转账为例，<br><br>    SELECT * FROM account1;<br>　　　　　　　　　　<img src="https://i.imgur.com/54eBnky.png" alt=""><br>　　事务的开始和提交操作：COMMIT<br><br>    START TRANSACTION;<br>    UPDATE account SET balance=balance-10000 WHERE id=1;<br>    UPDATE account SET balance=balance+10000 WHERE id=2;<br>    COMMIT;<br>　　　　　　　　　　<img src="https://i.imgur.com/ydlzH5R.png" alt=""><br>　　事务的回滚操作：ROLLBACK，执行完回滚操作后，此时的事务回滚至起点，即未进行操作。<br>    START TRANSACTION;<br>    UPDATE account SET balance=balance-10000 WHERE id=1;<br>    UPDATE account SET balance=balance+10000 WHERE id=2;<br>    ROLLBACK ;<br></font>
+<font size="5"><strong>一、什么是事务</strong></font><br><br><font face="微软雅黑">　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。<br><br>　　举一个简单的例子：银行转账事务。A要给B转账10000元人民币，要实现的操作包括：<br><br>　　- <strong>操作１：A账户中减去10000元；</strong><br><br>　　- <strong>操作２：B账户中增加10000元。</strong><br><br>　　如果银行系统Ａ完成了减去1000元的操作，这时系统出现问题，没有给Ｂ账户进行增加1000元的操作。很明显，这种操作是存在极大的风险的。在这个事务中，要么事务中的多个操作都成功，要么都失败，不能出现某些操作成功，而某些操作失败的情况。即：操作１和操作２都成功，完成转账；或者操作１和操作２都失败，转账失败。<br></font><br><br><font size="5"><strong>二、事务的四大特性（ACID）</strong></font><br><font face="微软雅黑">　　由上面的例子，我们很容易就可以总结出事务的四大特性。<br>　　1. 原子性（Atomicity）：事务中所有操作是不可再分割的原子单位。事务中所有操作要么全部执行成功，要么全部执行失败。<br>　　2. 一致性 （Consistency）：事务执行后，数据库状态与其它业务规则保持一致。如转账业务，无论事务执行成功与否，参与转账的两个账号余额之和应该是不变的。其他特性都是服务于一致性。<br>　　3. 隔离性（Isolation）：隔离性是指在并发操作中，不同事务之间应该隔离开来，使每个并发中的事务不会相互干扰。<br>　　4. 持久性（Durability）：一旦事务提交成功，事务中所有的数据操作都必须被持久化到数据库中，即使提交事务后，数据库马上崩溃，在数据库重启时，也必须能保证通过某种机制恢复数据。<br></font><br><br><font size="5"><strong>三、事务隔离级别</strong></font><br>１.　SQL中定义了４中隔离级别。<br>- <strong>SERIALIZABLE（串行化）</strong><br>　　不会出现任何并发问题，因为它是对同一数据的访问是串行的，非并发访问的，性能最差；<br>- <strong>REPEATABLE READ （可重复读）（MySQL）</strong><br>　　防止脏读和不可重复读，不能处理幻读问题；<br>　　性能比SERIALIZABLE好。<br>- <strong>READ COMMITTED （读已提交数据）（Oracle）</strong><br>　　防止脏读，没有处理不可重复读，也没有处理幻读；<br>　　性能比REPEATABLE READ好。<br>- <strong>READ UNCOMMITTED （读未提交数据）：脏读</strong><br>　　即使没有提交，对其他事务也都是可见的。<br>　　可能出现任何事务并发问题；<br>　　性能最好。<br><br>２.　<strong>MySQL中默认的隔离级别为Repeatable read</strong><br><br>    select @@tx_isolation　／／可以通过这个语句进行查看<br>    set transaction isolationlevel 　／／可以通过这个语句进行设置隔离级别<br><br>３.　<strong>JDBC设置隔离级别</strong><br><br>    con. setTransactionIsolation(int level)<br><br>参数可选值如下：<br><br>    Connection.TRANSACTION_READ_UNCOMMITTED；<br>    Connection.TRANSACTION_READ_COMMITTED；<br>    Connection.TRANSACTION_REPEATABLE_READ；<br>    Connection.TRANSACTION_SERIALIZABLE。<br><br><font size="5"><strong>四、 MySQL中的事务</strong></font><br><font face="微软雅黑">　　MySQL中默认每一条SQL语句代表一个事务。但是如果一个事务中包含多个语句，那么需要进行开始事务和结束事务的操作。<br>　　我们以银行转账为例，<br>    SELECT * FROM account1;<br>　　　　　　　　　　<img src="https://i.imgur.com/54eBnky.png" alt=""><br><br>　　（１）事务的开始和提交操作：COMMIT<br>    START TRANSACTION;<br>    UPDATE account SET balance=balance-10000 WHERE id=1;<br>    UPDATE account SET balance=balance+10000 WHERE id=2;<br>    COMMIT;<br>　　　　　　　　　　<img src="https://i.imgur.com/ydlzH5R.png" alt=""><br><br>　　（２）事务的回滚操作：ROLLBACK，执行完回滚操作后，此时的事务回滚至起点，即未进行操作。<br>    START TRANSACTION;<br>    UPDATE account SET balance=balance-10000 WHERE id=1;<br>    UPDATE account SET balance=balance+10000 WHERE id=2;<br>    ROLLBACK ;<br></font>
 
 
 
@@ -312,8 +308,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2018/06/26/MySQL基础（一）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MySQL基础小记(一)</div>
+    <a href="/2018/06/20/HelloWorld/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
       <i class="icon-circle-right"></i>
     </a>
   

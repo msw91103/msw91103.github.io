@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>MSW&#39;s Studio</title>
+  <title>MySQL-事务 | MSW&#39;s Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MSW&#39;s Studio">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="##MySQL-事务## #一、什么是事务 # 　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。　　举一个简单的例子：银行转账事务。A要给B转账1000元人民币，要实现的操作包括：　　- 操作１：A账户中减去1000元；　　- 操作２：">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-事务">
+<meta property="og:url" content="http://yoursite.com/2018/07/08/MySQL基础（二）/index.html">
 <meta property="og:site_name" content="MSW&#39;s Studio">
+<meta property="og:description" content="##MySQL-事务## #一、什么是事务 # 　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。　　举一个简单的例子：银行转账事务。A要给B转账1000元人民币，要实现的操作包括：　　- 操作１：A账户中减去1000元；　　- 操作２：">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/54eBnky.png">
+<meta property="og:image" content="https://i.imgur.com/ydlzH5R.png">
+<meta property="og:updated_time" content="2018-07-09T03:19:11.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MSW&#39;s Studio">
+<meta name="twitter:title" content="MySQL-事务">
+<meta name="twitter:description" content="##MySQL-事务## #一、什么是事务 # 　　MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。　　举一个简单的例子：银行转账事务。A要给B转账1000元人民币，要实现的操作包括：　　- 操作１：A账户中减去1000元；　　- 操作２：">
+<meta name="twitter:image" content="https://i.imgur.com/54eBnky.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -160,16 +168,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="poster-MySQL基础（二）" class="article article-type-poster  article-index" itemscope itemprop="blogPost">
+            <article id="poster-MySQL基础（二）" class="article article-type-poster " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/08/MySQL基础（二）/">MySQL-事务</a>
+    <h1 class="article-title" itemprop="name">
+      MySQL-事务
     </h1>
   
 
@@ -192,95 +198,36 @@
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/08/MySQL基础（二）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/MySQL基础/">MySQL基础小记(一)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/26/MySQL基础/" class="archive-article-date">
-  	<time datetime="2018-06-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>  SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。SQ标准（ANSI/ISO）有：</p>
-<ul>
-<li>SQL-92：1992年发布的SQL语言标准；</li>
-</ul>
-<ul>
-<li>SQL:1999：1999年发布的SQL语言标签；</li>
-</ul>
-<ul>
-<li><p>SQL:2003：2003年发布的SQL语言标签；</p>
-<p>这些标准就与JDK的版本一样，在新的版本中总要有一些语法的变化。不同时期的数据库对不同标准做了实现。<br>虽然SQL可以用在所有关系型数据库中，但很多数据库还都有标准之后的一些语法，我们可以称之为“方言”。例如MySQL中的LIMIT语句就是MySQL独有的方言，其它数据库都不支持！当然，Oracle或SQL Server都有自己的方言。</p>
-<h2 id="2-语句的分类"><a href="#2-语句的分类" class="headerlink" title="2 语句的分类"></a>2 语句的分类</h2></li>
-</ul>
-<ol>
-<li><p>DDL（Data Definition Language）：数据定义语言。<br><img src="../ddl.png" alt="ddl"></p>
-</li>
-<li></li>
-</ol>
-
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -300,16 +247,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/MySQL基础/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/08/MySQL基础（二）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/26/MySQL基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL基础小记(一)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -329,77 +335,14 @@
 
 
 
-
   
-    <article id="poster-HelloWorld" class="article article-type-poster  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/20/HelloWorld/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/2018/06/20/HelloWorld/" class="archive-article-date">
-  	<time datetime="2018-06-20T04:18:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##第一个博客小站##</p>
-<p>大家好，这是我的第一篇博文。刚刚新建的Hexo+Github个人博客，很多地方还不会用，慢慢摸索。希望利用博客的方式，记录自己在学习编程过程中的点点滴滴，加油！</p>
-<pre>
-public static void main(String[] args){
-    System.out.println("Hello World");
-}
-</pre> 
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/20/HelloWorld/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+
   
 
 
@@ -422,8 +365,8 @@ public static void main(String[] args){
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

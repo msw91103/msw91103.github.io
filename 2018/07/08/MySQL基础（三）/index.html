@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | MSW&#39;s Studio</title>
+  <title>MySQL-事务 | MSW&#39;s Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MSW&#39;s Studio">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="数据库连接池 一、什么是数据库连接池 　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connec">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-事务">
+<meta property="og:url" content="http://yoursite.com/2018/07/08/MySQL基础（三）/index.html">
 <meta property="og:site_name" content="MSW&#39;s Studio">
+<meta property="og:description" content="数据库连接池 一、什么是数据库连接池 　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connec">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-13T13:23:07.343Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MSW&#39;s Studio">
+<meta name="twitter:title" content="MySQL-事务">
+<meta name="twitter:description" content="数据库连接池 一、什么是数据库连接池 　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connec">
   
   
     <link rel="icon" href="/favicon.png">
@@ -142,36 +147,106 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="poster-MySQL基础（三）" class="article article-type-poster " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/08/MySQL基础（二）/" class="archive-article-date">
-  	<time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/08/MySQL基础（二）/">MySQL-事务</a>
+    <h1 class="article-title" itemprop="name">
+      MySQL-事务
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/07/08/MySQL基础（三）/" class="archive-article-date">
+  	<time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　　<center><font size="10"><strong>数据库连接池</strong><br></font></center></p>
+<p><font size="5"><strong>一、什么是数据库连接池</strong></font><br></p>
+<p><font face="微软雅黑">　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connection对象。当使用完Connection后，调用Connection的close()方法也不会真的关闭Connection，而是把Connection“归还”给池。池就可以再利用这个Connection对象了。数据库连接池的原理通俗地说：先创建好几个数据库放在池里，等系统需要用了直接去连接，并做上标记（连接），用完后再将数据库连接还回到池里，同时做上标记（空闲）。当有连接需求时，此时又没有空闲数据库连接，则会新建立连接放入池中。而这些参数我们都可以自己进行配置，如：<br><br>　　- 初始大小：10个<br>　　- 最小空闲连接数：3个<br>　　- 增量：一次创建的最小单位（5个）<br>　　- 最大空闲连接数：12个<br>　　- 最大连接数：20个<br>　　- 最大的等待时间：1000毫秒<br></font><br></p>
+<p><font size="5"><strong>二、常见连接池</strong></font></p>
+<p><font face="微软雅黑">　　这里总结下两个常见的连接池：DBCP和c3p0。导包是使用数据库连接池的第一步，<br>　　1.DBCP：<font color="red"><strong>导jar包，commons-pool.jar、commons-dbcp.jar</strong></font><br>　　DBCP是Apache提供的一款开源免费的数据库连接池。<br>        public void demo1() throws SQLException {<br>            //导入核心类:BasicDataSource<br>            BasicDataSource ds = new BasicDataSource();</font></p>
+<pre><code>        //基本配置
+        ds.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);
+        ds.setUrl(&quot;jdbc:mysql://localhost:3306/mydb1&quot;);
+        ds.setUsername(&quot;root&quot;);
+        ds.setPassword(&quot;123&quot;);
+
+        //最大连接数        
+        ds.setMaxActive(20); 
+        //最大空闲连接数：表示即使没有数据库连接时依然可以保持10个空闲的连接，而不被清除，随时处于待命状态。设 0 为没有限制。    
+        ds.setMaxIdle(10); 
+        //初始化连接数    
+        ds.setInitialSize(10) ;
+        //最小空闲连接数    
+        ds.setMinIdle(2) ;
+        //最大等待毫秒数
+        ds.setMaxWait(1000) ;
+
+        Connection con = ds.getConnection();
+        //只是将连接归还池
+        con.close() ;
+}
+</code></pre><p><br><br>　　2.c3p0:<font color="red"><strong>导jar包，c3p0-0.9.2-pre1.jar、c3p0-oracle-thin-extras-0.9.2-pre1.jar、mchange-commons-0.2.jar</strong></font><br>　　c3p0也是开源免费的连接池！<br>    public void demo2() throws PropertyVetoException, SQLException {<br>        //导入核心类:ComboPooledDataSource<br>        ComboPooledDataSource ds = new ComboPooledDataSource();<br>        //基本配置<br>        ds.setDriverClass(“com.mysql.jdbc.Driver”);<br>        ds.setJdbcUrl(“jdbc:mysql://localhost:3306/mydb1”);<br>        ds.setUser(“root”);<br>        ds.setPassword(“123”);</p>
+<pre><code>    //每次的增量为5
+    ds.setAcquireIncrement(5) ;
+    //初始化连接数为20
+    ds.setInitialPoolSize(20) ;
+    //最少连接数为2
+    ds.setMinPoolSize(2) ;
+    //最大连接数为50
+    ds.setMaxPoolSize(50) ;
+
+    Connection con = ds.getConnection();
+    //只是将连接归还池
+    con.close();
+}
+</code></pre><p>　　使用配置文件进行连接，有两个要求：（1）配置文件：c3p0-config.xml；（2）文件位置：src下<br>    &lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>    <c3p0-config><br>        <default-config><br>            <property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property><br>            <property name="driverClass">com.mysql.jdbc.Driver</property><br>            <property name="user">root</property><br>            <property name="password">123</property><br>            <property name="acquireIncrement">3</property><br>            <property name="initialPoolSize">10</property><br>            <property name="minPoolSize">2</property><br>            <property name="maxPoolSize">10</property><br>        </default-config><br>    </c3p0-config><br>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为oracle-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“orcale-config”) 。<br>    <named-config name="oracle-config"><br>            <property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property><br>            <property name="driverClass">com.mysql.jdbc.Driver</property><br>            <property name="user">root</property><br>            <property name="password">123</property><br>            <property name="acquireIncrement">3</property><br>            <property name="initialPoolSize">10</property><br>            <property name="minPoolSize">2</property><br>            <property name="maxPoolSize">10</property><br>        </named-config></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,95 +258,115 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/08/MySQL基础（三）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/08/MySQL基础（三）/" class="archive-article-date">
-  	<time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-08</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/07/08/MySQL基础（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MySQL-事务
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/20/HelloWorld/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/08/MySQL基础（三）/">MySQL-事务</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/20/HelloWorld/" class="archive-article-date">
-  	<time datetime="2018-06-20T04:18:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/20/HelloWorld/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">测试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -294,8 +389,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -246,8 +246,12 @@
 <p><font size="5"><strong>一、什么是数据库连接池</strong></font><br></p>
 <p><font face="微软雅黑">　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connection对象。当使用完Connection后，调用Connection的close()方法也不会真的关闭Connection，而是把Connection“归还”给池。池就可以再利用这个Connection对象了。数据库连接池的原理通俗地说：先创建好几个数据库放在池里，等系统需要用了直接去连接，并做上标记（连接），用完后再将数据库连接还回到池里，同时做上标记（空闲）。当有连接需求时，此时又没有空闲数据库连接，则会新建立连接放入池中。而这些参数我们都可以自己进行配置，如：<br><br>　　- 初始大小：10个<br>　　- 最小空闲连接数：3个<br>　　- 增量：一次创建的最小单位（5个）<br>　　- 最大空闲连接数：12个<br>　　- 最大连接数：20个<br>　　- 最大的等待时间：1000毫秒<br></font><br></p>
 <p><font size="5"><strong>二、常见连接池</strong></font></p>
-<p><font face="微软雅黑">　　这里总结下两个常见的连接池：DBCP和c3p0。导包是使用数据库连接池的第一步，<br>　　1.DBCP：<font color="red"><strong>导jar包，commons-pool.jar、commons-dbcp.jar</strong></font><br>　　DBCP是Apache提供的一款开源免费的数据库连接池。<br>        public void demo1() throws SQLException {<br>            //导入核心类:BasicDataSource<br>            BasicDataSource ds = new BasicDataSource();</font></p>
-<pre><code>        //基本配置
+<p><font face="微软雅黑">　　这里总结下两个常见的连接池：DBCP和c3p0。导包是使用数据库连接池的第一步，<br>　　1.DBCP：<font color="red"><strong>导jar包，commons-pool.jar、commons-dbcp.jar</strong></font><br>　　DBCP是Apache提供的一款开源免费的数据库连接池。</font></p>
+<pre><code>    public void demo1() throws SQLException {
+        //导入核心类:BasicDataSource
+        BasicDataSource ds = new BasicDataSource();
+
+        //基本配置
         ds.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);
         ds.setUrl(&quot;jdbc:mysql://localhost:3306/mydb1&quot;);
         ds.setUsername(&quot;root&quot;);
@@ -268,8 +272,18 @@
         //只是将连接归还池
         con.close() ;
 }
-</code></pre><p><br><br>　　2.c3p0:<font color="red"><strong>导jar包，c3p0-0.9.2-pre1.jar、c3p0-oracle-thin-extras-0.9.2-pre1.jar、mchange-commons-0.2.jar</strong></font><br>　　c3p0也是开源免费的连接池！<br>    public void demo2() throws PropertyVetoException, SQLException {<br>        //导入核心类:ComboPooledDataSource<br>        ComboPooledDataSource ds = new ComboPooledDataSource();<br>        //基本配置<br>        ds.setDriverClass(“com.mysql.jdbc.Driver”);<br>        ds.setJdbcUrl(“jdbc:mysql://localhost:3306/mydb1”);<br>        ds.setUser(“root”);<br>        ds.setPassword(“123”);</p>
-<pre><code>    //每次的增量为5
+</code></pre><p><br><br>　　2.c3p0:<font color="red"><strong>导jar包，c3p0-0.9.2-pre1.jar、c3p0-oracle-thin-extras-0.9.2-pre1.jar、mchange-commons-0.2.jar</strong></font><br>　　c3p0也是开源免费的连接池！</p>
+<pre><code>public void demo2() throws PropertyVetoException, SQLException {
+    //导入核心类:ComboPooledDataSource
+    ComboPooledDataSource ds = new ComboPooledDataSource();
+    //基本配置
+    ds.setDriverClass(&quot;com.mysql.jdbc.Driver&quot;);
+    ds.setJdbcUrl(&quot;jdbc:mysql://localhost:3306/mydb1&quot;);
+    ds.setUser(&quot;root&quot;);
+    ds.setPassword(&quot;123&quot;);
+
+
+    //每次的增量为5
     ds.setAcquireIncrement(5) ;
     //初始化连接数为20
     ds.setInitialPoolSize(20) ;
@@ -282,8 +296,32 @@
     //只是将连接归还池
     con.close();
 }
-</code></pre><p>　　使用配置文件进行连接，有两个要求：（1）配置文件：c3p0-config.xml；（2）文件位置：src下<br>    &lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>    <c3p0-config><br>        <default-config><br>            <property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property><br>            <property name="driverClass">com.mysql.jdbc.Driver</property><br>            <property name="user">root</property><br>            <property name="password">123</property><br>            <property name="acquireIncrement">3</property><br>            <property name="initialPoolSize">10</property><br>            <property name="minPoolSize">2</property><br>            <property name="maxPoolSize">10</property><br>        </default-config><br>    </c3p0-config><br>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为oracle-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“orcale-config”) 。<br>    <named-config name="oracle-config"><br>            <property name="jdbcUrl">jdbc:mysql://localhost:3306/mydb1</property><br>            <property name="driverClass">com.mysql.jdbc.Driver</property><br>            <property name="user">root</property><br>            <property name="password">123</property><br>            <property name="acquireIncrement">3</property><br>            <property name="initialPoolSize">10</property><br>            <property name="minPoolSize">2</property><br>            <property name="maxPoolSize">10</property><br>        </named-config></p>
-
+</code></pre><p>　　使用配置文件进行连接，有两个要求：（1）配置文件：c3p0-config.xml；（2）文件位置：src下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;c3p0-config&gt;
+    &lt;default-config&gt; 
+        &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql://localhost:3306/mydb1&lt;/property&gt;
+        &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;
+        &lt;property name=&quot;password&quot;&gt;123&lt;/property&gt;
+        &lt;property name=&quot;acquireIncrement&quot;&gt;3&lt;/property&gt;
+        &lt;property name=&quot;initialPoolSize&quot;&gt;10&lt;/property&gt;
+        &lt;property name=&quot;minPoolSize&quot;&gt;2&lt;/property&gt;
+        &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt;
+    &lt;/default-config&gt;
+&lt;/c3p0-config&gt;
+</code></pre><p>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为oracle-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“orcale-config”) 。</p>
+<pre><code>&lt;named-config name=&quot;oracle-config&quot;&gt; 
+    &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql://localhost:3306/mydb1&lt;/property&gt;
+    &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+    &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;
+    &lt;property name=&quot;password&quot;&gt;123&lt;/property&gt;
+    &lt;property name=&quot;acquireIncrement&quot;&gt;3&lt;/property&gt;
+    &lt;property name=&quot;initialPoolSize&quot;&gt;10&lt;/property&gt;
+    &lt;property name=&quot;minPoolSize&quot;&gt;2&lt;/property&gt;
+    &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt;
+&lt;/named-config&gt;
+</code></pre>
       
 
       

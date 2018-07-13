@@ -17,7 +17,7 @@
 <meta property="og:description" content="数据库连接池 一、什么是数据库连接池 　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connec">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.imgur.com/aJKydHT.jpg">
-<meta property="og:updated_time" content="2018-07-13T14:13:47.704Z">
+<meta property="og:updated_time" content="2018-07-13T14:18:35.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL-事务">
 <meta name="twitter:description" content="数据库连接池 一、什么是数据库连接池 　　数据库连接是一种关键的、有限的、昂贵的资源。每次用户获取数据库连接都需要消耗较大的资源，数据库连接池可以管理连接，可以重复使用连接而不需要每次都进行创建。使用池来管理连接的生命周期，可以节省资源，提高性能。用池来管理Connection，这可以重复使用Connection。有了池，我们就不用自己来创建Connection，而是通过池来获取Connec">
@@ -237,8 +237,8 @@
         &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt;
     &lt;/default-config&gt;
 &lt;/c3p0-config&gt;
-</code></pre><p>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为oracle-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“orcale-config”) 。</p>
-<pre><code>&lt;named-config name=&quot;oracle-config&quot;&gt; 
+</code></pre><p>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为test-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“test-config”) 。</p>
+<pre><code>&lt;named-config name=&quot;test-config&quot;&gt; 
     &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql://localhost:3306/mydb1&lt;/property&gt;
     &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
     &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;

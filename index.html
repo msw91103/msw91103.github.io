@@ -232,8 +232,8 @@
         &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt;
     &lt;/default-config&gt;
 &lt;/c3p0-config&gt;
-</code></pre><p>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为oracle-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“orcale-config”) 。</p>
-<pre><code>&lt;named-config name=&quot;oracle-config&quot;&gt; 
+</code></pre><p>　　c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，这样可以方便的通过配置名称来切换配置信息。上面文件中默认配置为mysql的配置，名为test-config的配置也是mysql的配置。此时可以使用有参构造器进行指定配置信息：ComboPooledDataSource ds = new ComboPooledDataSource(“test-config”) 。</p>
+<pre><code>&lt;named-config name=&quot;test-config&quot;&gt; 
     &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql://localhost:3306/mydb1&lt;/property&gt;
     &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
     &lt;property name=&quot;user&quot;&gt;root&lt;/property&gt;

@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/7 | MSW&#39;s Studio</title>
+  <title>commons-dbutils学习 | MSW&#39;s Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MSW&#39;s Studio">
-<meta property="og:url" content="http://yoursite.com/archives/2018/07/index.html">
+  <meta name="description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="commons-dbutils学习">
+<meta property="og:url" content="http://yoursite.com/2018/07/09/commons-dbutils包学习/index.html">
 <meta property="og:site_name" content="MSW&#39;s Studio">
+<meta property="og:description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-14T08:06:03.386Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MSW&#39;s Studio">
+<meta name="twitter:title" content="commons-dbutils学习">
+<meta name="twitter:description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
   
   
     <link rel="icon" href="/favicon.png">
@@ -142,74 +147,70 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="poster-commons-dbutils包学习" class="article article-type-poster " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/13/数据库连接池/" class="archive-article-date">
-  	<time datetime="2018-07-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/13/数据库连接池/">数据库连接池</a>
+    <h1 class="article-title" itemprop="name">
+      commons-dbutils学习
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JBDC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/09/commons-dbutils包学习/" class="archive-article-date">
+        
+        <a href="/2018/07/09/commons-dbutils包学习/" class="archive-article-date">
   	<time datetime="2018-07-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/09/commons-dbutils包学习/">commons-dbutils学习</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　　<center><font size="10"><strong>commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍</strong><br></font></center></p>
+<font size="5"><strong>一、commons-dbutils.jar</strong></font><br><font face="微软雅黑">　　<font color="blue">&lt; font size=8&gt;<strong>c</strong></font><strong>ommons-dbutils.jar</strong></font>是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。<br><br><font size="5"><strong>二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口</strong></font><br><font face="微软雅黑">　<br>1. QueryRunner的方法 　<br>- QueryRunner()：构造方法；　<br>- update()：执行insert、update、delete；<br>- query()：执行select语句；<br>- batch()：执行批处理。<br>2. ResultSetHandler接口<br>(1)BeanHandler：<font color="red">单行处理器</font>，构造器需要传入Class类型的参数，用来把一行结果转换成指定类型的javaBean对象。<br><br>    @Test<br>    public void demo1(){<br>        DataSource ds = JdbcUtils.getDataSource();<br>        QueryRunner qr = new QueryRunner(ds);<br>        String sql =  “select <em> from t_user where username=?”;<br>        User user = qr.query(sql,new BeanHandler(User)(User.class),”zs”);<br><br>        System.out.println(user);<br>    }<br>查询到的结果（单行）：User [username=zs, password=zs, age=22, gender=女]<br>(2)BeanListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;，构造器也是需要一个Class类型的参数，用来把一行结果集转换成一个javabean，那么多行就是转换成List对象，一堆javabean。<br><br>    @Test<br>    public void demo2() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select </em> from t_user”;<br>        List<user> userL = qr.query(sql, new BeanListHandler<user>(User.class) );<br><br>        System.out.println(userL);<br>    }<br>查询到的结果（多行）：<br><br>    [ User [username=cym, password=cym, age=20, gender=男],<br>    User [username=张三, password=123, age=20, gender=男],<br>    User [username=zs, password=zs, age=22, gender=女],<br>    User [username=ls, password=ls, age=23, gender=男] ]<br>(3)MapHandler：<font color="red">单行处理器</font>， 把一行结果集转换Map对象。<br><br>    @Test<br>    public void demo3() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select <em> from t_user WHERE USERNAME=?”;<br>        Object[] params = {“cym”};<br>        Map map = qr.query(sql, new MapHandler(),params);<br><br>        System.out.println(map);<br>    }<br>查询到的结果（单行）：{password=cym, gender=男, age=20, username=cym}<br>(4)MapListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;。<br><br>    @Test<br>    public void demo4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select </em> from t_user”;<br>        List&lt;Map&lt;String,Object&gt;&gt; mapL = qr.query(sql, new MapListHandler());<br><br>        System.out.println(mapL);<br>    }<br>查询到的结果（多行）：<br><br>    [{password=cym, gender=男, age=20, username=cym},<br>    {password=123, gender=男, age=20, username=张三},<br>    {password=zs, gender=女, age=22, username=zs},<br>    {password=ls, gender=男, age=23, username=ls}]<br>(5)ScalarHandler：<font color="red">单行单列</font>，常与count(<em>)连用。<br><br>    public void fun4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select count(</em>) from t_user”;<br>        Number number = (Number)qr.query(sql, new ScalarHandler());<br><br>        int i = number.intValue();<br>        System.out.println(i);<br>    }<br>查询到的结果（单行单列）：4。<br>　　这里需要注意的是：query查询出的类型需要进行Number的转换，不同版本的jar包返回的类型是有差异的，并且和oracle驱动包的返回类型也有差异（BigInteger），为了避免在以后更新驱动包后产生不必要的问题，我们需要进行一些操作,这些数值类型有共同的父类为Number，因此可以进行转换：<br>    Number number = (Number)qr.query(sql, new ScalarHandler());<br>    /根据需要转换成相应的类型<br>    int i = number.intValue();<br></user></user></font>
 
-        <div class="article-info info-on-right">
-          
+
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -221,57 +222,115 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/09/commons-dbutils包学习/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-poster">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/08/MySQL事务/" class="archive-article-date">
-  	<time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-08</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/07/13/数据库连接池/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数据库连接池
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/08/MySQL事务/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL-事务</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/08/MySQL事务/">MySQL-事务</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -294,8 +353,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

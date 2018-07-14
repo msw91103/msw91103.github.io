@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>commons-dbutils学习 | MSW&#39;s Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
+  <meta name="description" content="commons-dbutils学习 ——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口　1. Q">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="commons-dbutils学习">
-<meta property="og:url" content="http://yoursite.com/2018/07/09/commons-dbutils包学习/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/commons-dbutils包学习/index.html">
 <meta property="og:site_name" content="MSW&#39;s Studio">
-<meta property="og:description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
+<meta property="og:description" content="commons-dbutils学习 ——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口　1. Q">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-14T08:06:03.386Z">
+<meta property="og:updated_time" content="2018-07-14T08:14:27.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="commons-dbutils学习">
-<meta name="twitter:description" content="commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　&amp;lt; font size=8&amp;gt;commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和Resu">
+<meta name="twitter:description" content="commons-dbutils学习 ——QueryRunner类和ResultSetHandler接口介绍 一、commons-dbutils.jar　　commons-dbutils.jar是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口　1. Q">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,16 +159,16 @@
   
 
         
-        <a href="/2018/07/09/commons-dbutils包学习/" class="archive-article-date">
-  	<time datetime="2018-07-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
+        <a href="/2018/07/14/commons-dbutils包学习/" class="archive-article-date">
+  	<time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>　　　<center><font size="10"><strong>commons-dbutils学习——QueryRunner类和ResultSetHandler接口介绍</strong><br></font></center></p>
-<font size="5"><strong>一、commons-dbutils.jar</strong></font><br><font face="微软雅黑">　　<font color="blue">&lt; font size=8&gt;<strong>c</strong></font><strong>ommons-dbutils.jar</strong></font>是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。<br><br><font size="5"><strong>二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口</strong></font><br><font face="微软雅黑">　<br>1. QueryRunner的方法 　<br>- QueryRunner()：构造方法；　<br>- update()：执行insert、update、delete；<br>- query()：执行select语句；<br>- batch()：执行批处理。<br>2. ResultSetHandler接口<br>(1)BeanHandler：<font color="red">单行处理器</font>，构造器需要传入Class类型的参数，用来把一行结果转换成指定类型的javaBean对象。<br><br>    @Test<br>    public void demo1(){<br>        DataSource ds = JdbcUtils.getDataSource();<br>        QueryRunner qr = new QueryRunner(ds);<br>        String sql =  “select <em> from t_user where username=?”;<br>        User user = qr.query(sql,new BeanHandler(User)(User.class),”zs”);<br><br>        System.out.println(user);<br>    }<br>查询到的结果（单行）：User [username=zs, password=zs, age=22, gender=女]<br>(2)BeanListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;，构造器也是需要一个Class类型的参数，用来把一行结果集转换成一个javabean，那么多行就是转换成List对象，一堆javabean。<br><br>    @Test<br>    public void demo2() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select </em> from t_user”;<br>        List<user> userL = qr.query(sql, new BeanListHandler<user>(User.class) );<br><br>        System.out.println(userL);<br>    }<br>查询到的结果（多行）：<br><br>    [ User [username=cym, password=cym, age=20, gender=男],<br>    User [username=张三, password=123, age=20, gender=男],<br>    User [username=zs, password=zs, age=22, gender=女],<br>    User [username=ls, password=ls, age=23, gender=男] ]<br>(3)MapHandler：<font color="red">单行处理器</font>， 把一行结果集转换Map对象。<br><br>    @Test<br>    public void demo3() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select <em> from t_user WHERE USERNAME=?”;<br>        Object[] params = {“cym”};<br>        Map map = qr.query(sql, new MapHandler(),params);<br><br>        System.out.println(map);<br>    }<br>查询到的结果（单行）：{password=cym, gender=男, age=20, username=cym}<br>(4)MapListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;。<br><br>    @Test<br>    public void demo4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select </em> from t_user”;<br>        List&lt;Map&lt;String,Object&gt;&gt; mapL = qr.query(sql, new MapListHandler());<br><br>        System.out.println(mapL);<br>    }<br>查询到的结果（多行）：<br><br>    [{password=cym, gender=男, age=20, username=cym},<br>    {password=123, gender=男, age=20, username=张三},<br>    {password=zs, gender=女, age=22, username=zs},<br>    {password=ls, gender=男, age=23, username=ls}]<br>(5)ScalarHandler：<font color="red">单行单列</font>，常与count(<em>)连用。<br><br>    public void fun4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select count(</em>) from t_user”;<br>        Number number = (Number)qr.query(sql, new ScalarHandler());<br><br>        int i = number.intValue();<br>        System.out.println(i);<br>    }<br>查询到的结果（单行单列）：4。<br>　　这里需要注意的是：query查询出的类型需要进行Number的转换，不同版本的jar包返回的类型是有差异的，并且和oracle驱动包的返回类型也有差异（BigInteger），为了避免在以后更新驱动包后产生不必要的问题，我们需要进行一些操作,这些数值类型有共同的父类为Number，因此可以进行转换：<br>    Number number = (Number)qr.query(sql, new ScalarHandler());<br>    /根据需要转换成相应的类型<br>    int i = number.intValue();<br></user></user></font>
+        <p>　　　<center><font size="6"><strong>commons-dbutils学习</strong></font></center> <center>——QueryRunner类和ResultSetHandler接口介绍</center></p>
+<font size="5"><strong>一、commons-dbutils.jar</strong></font><br><font face="微软雅黑">　　<font color="blue"><strong>commons-dbutils.jar</strong></font>是Apache Commons组件中的一员，它是对JDBC进行简单封装的开源工具类库。<br></font><br><font size="5"><strong>二、commons-dbutils.jar之QueryRunner类和ResultSetHandler接口</strong></font><br><font face="微软雅黑">　<br>1. QueryRunner的方法 　<br>- QueryRunner()：构造方法；　<br>- update()：执行insert、update、delete；<br>- query()：执行select语句；<br>- batch()：执行批处理。<br>2. ResultSetHandler接口<br>(1)BeanHandler：<font color="red">单行处理器</font>，构造器需要传入Class类型的参数，用来把一行结果转换成指定类型的javaBean对象。<br><br>    @Test<br>    public void demo1(){<br>        DataSource ds = JdbcUtils.getDataSource();<br>        QueryRunner qr = new QueryRunner(ds);<br>        String sql =  “select <em> from t_user where username=?”;<br>        User user = qr.query(sql,new BeanHandler(User)(User.class),”zs”);<br><br>        System.out.println(user);<br>    }<br><br>查询到的结果（单行）：User [username=zs, password=zs, age=22, gender=女]<br>(2)BeanListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;，构造器也是需要一个Class类型的参数，用来把一行结果集转换成一个javabean，那么多行就是转换成List对象，一堆javabean。<br><br>        @Test<br>        public void demo2() throws SQLException{<br>            QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>            String sql = “select </em> from t_user”;<br>            List<user> userL = qr.query(sql, new BeanListHandler<user>(User.class) );<br><br>            System.out.println(userL);<br>        }<br><br>查询到的结果（多行）：<br><br>        [ User [username=cym, password=cym, age=20, gender=男],<br>        User [username=张三, password=123, age=20, gender=男],<br>        User [username=zs, password=zs, age=22, gender=女],<br>        User [username=ls, password=ls, age=23, gender=男] ]<br>(3)MapHandler：<font color="red">单行处理器</font>， 把一行结果集转换Map对象。<br><br>    @Test<br>    public void demo3() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select <em> from t_user WHERE USERNAME=?”;<br>        Object[] params = {“cym”};<br>        Map map = qr.query(sql, new MapHandler(),params);<br><br>        System.out.println(map);<br>    }<br>查询到的结果（单行）：{password=cym, gender=男, age=20, username=cym}<br>(4)MapListHandler：<font color="red">多行处理器</font>，把结果集转换成List&lt;Map&lt;String,Object&gt;&gt;。<br><br>    @Test<br>    public void demo4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select </em> from t_user”;<br>        List&lt;Map&lt;String,Object&gt;&gt; mapL = qr.query(sql, new MapListHandler());<br><br>        System.out.println(mapL);<br>    }<br>查询到的结果（多行）：<br><br>    [{password=cym, gender=男, age=20, username=cym},<br>    {password=123, gender=男, age=20, username=张三},<br>    {password=zs, gender=女, age=22, username=zs},<br>    {password=ls, gender=男, age=23, username=ls}]<br>(5)ScalarHandler：<font color="red">单行单列</font>，常与count(<em>)连用。<br><br>    public void fun4() throws SQLException{<br>        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());<br>        String sql = “select count(</em>) from t_user”;<br>        Number number = (Number)qr.query(sql, new ScalarHandler());<br><br>        int i = number.intValue();<br>        System.out.println(i);<br>    }<br>查询到的结果（单行单列）：4。<br>　　这里需要注意的是：query查询出的类型需要进行Number的转换，不同版本的jar包返回的类型是有差异的，并且和oracle驱动包的返回类型也有差异（BigInteger），为了避免在以后更新驱动包后产生不必要的问题，我们需要进行一些操作,这些数值类型有共同的父类为Number，因此可以进行转换：<br>    Number number = (Number)qr.query(sql, new ScalarHandler());<br>    /根据需要转换成相应的类型<br>    int i = number.intValue();<br></user></user></font>
 
 
 
@@ -272,7 +272,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/09/commons-dbutils包学习/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/14/commons-dbutils包学习/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -286,18 +286,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/07/13/数据库连接池/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          数据库连接池
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/07/08/MySQL事务/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MySQL-事务</div>
+    <a href="/2018/07/13/数据库连接池/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据库连接池</div>
       <i class="icon-circle-right"></i>
     </a>
   
